@@ -37,6 +37,40 @@ const GithubState = (props) => {
     });
   };
 
+   const getUser = async (username) => {
+    setLoading(true);
+
+    const res = await axios({
+      baseURL: `https://api.github.com/users/${username}`,
+      auth: {
+        username: "b7b2bb9800cef2b3901f",
+        password: "f8444ab8558415e0af59d9e449690eef492781b2",
+      },
+    });
+
+    dispatch({
+      type: GET_USER,
+      payload: res.data,
+    });
+  };
+
+  const getUserRepos = async (username) => {
+
+    const res = await axios({
+      baseURL: `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
+      auth: {
+        username: "b7b2bb9800cef2b3901f",
+        password: "f8444ab8558415e0af59d9e449690eef492781b2",
+      },
+    });
+dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
+  };
+
+  const clearUsers = () => dispatch({ type: CLEAR_USERS });
+
   const setLoading = () => dispatch({ type: SET_LOADING });
 
   return (
@@ -47,6 +81,9 @@ const GithubState = (props) => {
         repos: state.repos,
         loading: state.loading,
         searchUsers,
+        clearUsers,
+        getUser,
+        getUserRepos
       }}
     >
       {props.children}
