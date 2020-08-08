@@ -37,7 +37,7 @@ const GithubState = (props) => {
     });
   };
 
-   const getUser = async (username) => {
+  const getUser = async (username) => {
     setLoading(true);
 
     const res = await axios({
@@ -55,7 +55,6 @@ const GithubState = (props) => {
   };
 
   const getUserRepos = async (username) => {
-
     const res = await axios({
       baseURL: `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
       auth: {
@@ -63,7 +62,7 @@ const GithubState = (props) => {
         password: "f8444ab8558415e0af59d9e449690eef492781b2",
       },
     });
-dispatch({
+    dispatch({
       type: GET_REPOS,
       payload: res.data,
     });
@@ -83,7 +82,7 @@ dispatch({
         searchUsers,
         clearUsers,
         getUser,
-        getUserRepos
+        getUserRepos,
       }}
     >
       {props.children}
